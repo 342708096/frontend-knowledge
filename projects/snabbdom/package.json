@@ -1,0 +1,7 @@
+{
+  "input": "index.js",
+  "output": {
+    "file": "index.bundle.js",
+    "format": "cjs"
+  }
+}
