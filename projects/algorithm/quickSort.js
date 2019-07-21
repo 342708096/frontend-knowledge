@@ -27,6 +27,8 @@ function quickSort(arr, low, high) {
     return arr
 }
 
+// 快速排序时间复杂度 O(nlogn)
+
 let arr = [4, 8, 2, 3, 6, 1, 5, 9, 7, 10]
 quickSort(arr)
 console.log(arr)
