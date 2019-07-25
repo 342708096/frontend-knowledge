@@ -36,6 +36,7 @@ function bubbleSort(arr, desc) {
 ```
 
 3. 快速排序
+
 ```
 function quickSort(arr, low, high, desc) {
     var index;
