@@ -1,0 +1,8 @@
+{
+  "input": "index.js",
+  "output": {
+    "name": "report",
+    "file": "report.min.js",
+    "format": "umd"
+  }
+}

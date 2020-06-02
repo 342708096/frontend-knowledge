@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="div" onclick="this.innerHTML = ''"></div>
+    <script>
+        !function() {
+            var now = Date.now();
+            var div = document.getElementById('div');
+            div.innerHTML = 'before promise';
+            var i = 3;
+            (function p1 () {
+                Promise.resolve().then(() => {
+                    while(Date.now()-now<4000 * (4 - i)){
+                    }
+                    div.innerHTML = 'after promise' + i;
+                    console.log("微任务执行完成" + i);
+                    if (--i) {
+                        p1();
+                    }
+                });
+            })();
+
+            Promise.resolve().then(() => {
+                while(Date.now()-now<3000){
+                }
+                div.innerHTML = 'after promise20';
+                console.log("微任务执行完成20");
+            });
+            // setTimeout(() => {
+            //     while(Date.now()-now<2000){
+            //     }
+            //     div.innerHTML = 'after timeout';
+            //     console.log("宏任务执行完成");
+            // });
+        }()
+    </script>
+</body>
+</html>
