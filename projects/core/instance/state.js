@@ -150,7 +150,7 @@ function initData (vm: Component) {
   // observe data
   observe(data, true /* asRootData */)
 }
-
+// 神仙代码, 在获取data的阶段防止 无意间调用 getters 进行错误的依赖收集
 export function getData (data: Function, vm: Component): any {
   // #7573 disable dep collection when invoking data getters
   pushTarget()
@@ -168,6 +168,7 @@ const computedWatcherOptions = { lazy: true }
 
 function initComputed (vm: Component, computed: Object) {
   // $flow-disable-line
+  // 初始化一个computed watcher map 挂载到vm上
   const watchers = vm._computedWatchers = Object.create(null)
   // computed properties are just getters during SSR
   const isSSR = isServerRendering()
@@ -187,7 +188,7 @@ function initComputed (vm: Component, computed: Object) {
       watchers[key] = new Watcher(
         vm,
         getter || noop,
-        noop,
+        noop,  // callback 是 noop, 神仙代码, computed相当于没有callback的 watch
         computedWatcherOptions
       )
     }
@@ -237,14 +238,17 @@ export function defineComputed (
   }
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
-
+// computed getter 的工厂方法
 function createComputedGetter (key) {
   return function computedGetter () {
+    // 从map中拿到watcher
     const watcher = this._computedWatchers && this._computedWatchers[key]
     if (watcher) {
+      // 如果状态是脏的就调get来获取
       if (watcher.dirty) {
         watcher.evaluate()
       }
+      // 重要, 如果外部有watcher来观察computed, 那么就进行依赖收集
       if (Dep.target) {
         watcher.depend()
       }
@@ -283,6 +287,7 @@ function initMethods (vm: Component, methods: Object) {
         )
       }
     }
+    // 重要所有vue 里面 methods 都要bind vm, 所以回调时方便了
     vm[key] = typeof methods[key] !== 'function' ? noop : bind(methods[key], vm)
   }
 }
@@ -291,6 +296,7 @@ function initWatch (vm: Component, watch: Object) {
   for (const key in watch) {
     const handler = watch[key]
     if (Array.isArray(handler)) {
+      // 也就是说可以 watch : { abc: [callback1, callback2, callback3 ... ]}
       for (let i = 0; i < handler.length; i++) {
         createWatcher(vm, key, handler[i])
       }
@@ -354,6 +360,7 @@ export function stateMixin (Vue: Class<Component>) {
     options = options || {}
     options.user = true
     const watcher = new Watcher(vm, expOrFn, cb, options)
+    // 如果是immediate 则创建完成后里面回调
     if (options.immediate) {
       try {
         cb.call(vm, watcher.value)

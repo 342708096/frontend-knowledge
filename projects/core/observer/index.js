@@ -42,7 +42,7 @@ export class Observer {
   constructor (value: any) {
     this.value = value
     this.dep = new Dep()
-    this.vmCount = 0
+    this.vmCount = 0  // 表示是root data
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
       if (hasProto) {
@@ -163,6 +163,7 @@ export function defineReactive (
         dep.depend()
         if (childOb) {
           childOb.dep.depend()
+          // 如果是数组就递归子元素进行依赖收集, 所以数组举凡有一个子元素变动就会notify整个数组的watcher
           if (Array.isArray(value)) {
             dependArray(value)
           }
@@ -187,6 +188,7 @@ export function defineReactive (
       } else {
         val = newVal
       }
+      // 如果发现设置的是对象, 就又进行响应式绑定
       childOb = !shallow && observe(newVal)
       dep.notify()
     }
@@ -204,15 +206,18 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
   ) {
     warn(`Cannot set reactive property on undefined, null, or primitive value: ${(target: any)}`)
   }
+  // 数组的情形
   if (Array.isArray(target) && isValidArrayIndex(key)) {
     target.length = Math.max(target.length, key)
     target.splice(key, 1, val)
     return val
   }
+  // 已存在的属性, 触发set方法, 进而触发notify
   if (key in target && !(key in Object.prototype)) {
     target[key] = val
     return val
   }
+  // 未存在的属性, 但是发现是 vue实例
   const ob = (target: any).__ob__
   if (target._isVue || (ob && ob.vmCount)) {
     process.env.NODE_ENV !== 'production' && warn(
@@ -221,6 +226,7 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
     )
     return val
   }
+  // 不存在ob的情形是什么鬼?
   if (!ob) {
     target[key] = val
     return val
@@ -258,6 +264,7 @@ export function del (target: Array<any> | Object, key: any) {
   if (!ob) {
     return
   }
+  // 触发所有watch, 告知当前对象变更
   ob.dep.notify()
 }
 

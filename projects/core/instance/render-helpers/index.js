@@ -12,6 +12,9 @@ import { bindObjectListeners } from './bind-object-listeners'
 import { resolveScopedSlots } from './resolve-scoped-slots'
 import { bindDynamicKeys, prependModifier } from './bind-dynamic-keys'
 
+
+// 这里记录了render vnode 的实例方法, 最终挂载到vm上
+
 export function installRenderHelpers (target: any) {
   target._o = markOnce
   target._n = toNumber

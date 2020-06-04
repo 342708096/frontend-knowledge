@@ -2,7 +2,7 @@
 const Vue = (function() {
     function noop () {}
     let uid = 0;
-    // 用于储存订阅者并发布消息
+    // 用于储存订阅者并发布消息, 依赖收集器
     class Dep {
         constructor() {
             // 设置id,用于区分新Watcher和只改变属性值后新产生的Watcher
