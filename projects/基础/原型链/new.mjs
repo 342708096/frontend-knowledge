@@ -31,13 +31,13 @@
 
 
 function __new__(constructor, ...args) {
-  const that = Object.create(constructor.prototype)
+  const __proto__ = Object.create(constructor.prototype)
   const ret = constructor.call(__proto__, ...args)
   // 如果是引用类型, 最终应该最后返回该引用类型, null除外
   if (typeof ret === 'function' || (typeof ret === 'object' && ret !== null)) {
     return ret
   }
-  return that
+  return __proto__
 }
 
 
