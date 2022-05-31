@@ -12,7 +12,7 @@
         "<node_internals>/**"
       ],
       "autoAttachChildProcesses": true,
-      "program": "${workspaceFolder}/projects/algorithm/双指针/isValidSudoku.mjs",
+      "program": "${workspaceFolder}/projects/基础/promise/promiseA+.mjs",
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]
