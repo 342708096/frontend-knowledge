@@ -12,7 +12,7 @@
         "<node_internals>/**"
       ],
       "autoAttachChildProcesses": true,
-      "program": "${workspaceFolder}/projects/算法/双指针/无重复最长子串.mjs",
+      "program": "${workspaceFolder}/projects/算法/双指针/最长公共前缀.mjs",
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]
