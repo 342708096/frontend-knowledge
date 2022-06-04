@@ -1,3 +1,5 @@
+import { getType } from './getType.mjs'
+
 function deepClone(ori) {
     const type = getType(ori);
     switch(type) {
@@ -10,20 +12,6 @@ function deepClone(ori) {
         default:
             return ori;
     }
-}
-
-
-function getType(ori) {
-    if (ori === null) {
-        return 'null';
-    }
-    if (typeof ori === 'object') {
-        if (Object.prototype.toString.call(ori) === '[object array]') {
-            return 'array'
-        }
-        return 'object'
-    }
-    return typeof ori;
 }
 
 function copyArray(arr) {

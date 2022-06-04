@@ -12,7 +12,7 @@
         "<node_internals>/**"
       ],
       "autoAttachChildProcesses": true,
-      "program": "${workspaceFolder}/projects/算法/双指针/最长公共前缀.mjs",
+      "program": "${workspaceFolder}/projects/算法/位运算/求最大2的n次方.mjs",
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]

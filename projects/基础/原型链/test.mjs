@@ -1,13 +1,16 @@
 Function.prototype.a = () => console.log(1)
+// __function__.a = () => console.log(1)
 Object.prototype.b = () => console.log(2)
+// __object__.b = () => console.log(2)
 
 function A(){}
 var a = new A()
 
-A.b() // 2
-A.a() // 1
-a.b() // 2
-a.a() // is not function
+
+A.b() // __function__.b() => __object__.b => 2
+A.a() // __function__.a() => 1
+a.b() // __object__.b => 2
+a.a() // __object__.a => is not function
 
 // __function__.a = () => console.log(1)
 // __object__.b = () => console.log(2)

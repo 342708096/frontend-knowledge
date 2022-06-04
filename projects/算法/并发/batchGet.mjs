@@ -14,10 +14,7 @@ async function batchGet(urls, batchNum = 3, timeout=3000) {
 }
 
 function fetch(url, timeout = 3000) {
-  return Promise.race(window.fetch(url), new Promise((resolve) => {
+  return Promise.race([window.fetch(url), new Promise((resolve) => {
     setTimeout(() => {resolve(null)}, timeout)
-  })
+  })])
 }
-
-
-
