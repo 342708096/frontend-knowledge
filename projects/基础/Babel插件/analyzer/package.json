@@ -1,0 +1,33 @@
+{
+  "name": "commit-analyzer",
+  "version": "1.0.1",
+  "description": "pre-commit代码分析工具",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "bin": {
+    "commit-analyzer": "dist/index.js"
+  },
+  "scripts": {
+    "build": "npx babel src --out-dir dist",
+    "prepublishOnly": "npm run build",
+    "installx": "node install.js"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "@babel/parser": "^7.15.6",
+    "@babel/traverse": "^7.15.4",
+    "@babel/types": "^7.15.6",
+    "axios": "^0.21.4",
+    "chalk": "^4.1.2",
+    "commander": "^8.2.0",
+    "request": "^2.88.2",
+    "semver": "^7.3.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6"
+  }
+}
