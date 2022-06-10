@@ -1,0 +1,19 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <script>
+            window.onload = function () {
+              const entries = window.performance.getEntriesByType('paint');
+              console.log(entries);
+            };
+          </script>
+          <script>
+            window.onload = function () {
+                const entries = window.performance.getEntries();
+                console.log(entries);
+            };
+           </script>
+    </body>
+</html>

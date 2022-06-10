@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>service worker test</title>
+</head>
+<body>
+  <h3>Service Worker Test</h3>
+  <img src="https://images.unsplash.com/photo-1594627721989-502bf69bf6f3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=765&q=80" />
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.onload = () => {
+        // sw注册
+        navigator.serviceWorker.register('sw.js', { scope: './' })
+        .then(reg => {
+          console.log('sw注册成功')
+          // 向sw通信
+          const { controller } = navigator.serviceWorker
+          controller?.postMessage('Message from main')
+        })
+        .catch(err => {
+          console.log('sw注册失败', err)
+        })
+  
+        // 监听sw消息
+        navigator.serviceWorker.addEventListener('message', event => {
+          console.log(`main 1: ${event.data}`)
+        })
+      }
+    } else {
+      console.error('Service Worker is not supported')
+    }
+  </script>
+</body>
+</html>
