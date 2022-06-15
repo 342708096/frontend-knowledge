@@ -12,7 +12,7 @@
         "<node_internals>/**"
       ],
       "autoAttachChildProcesses": true,
-      "program": "${workspaceFolder}/projects/算法/位运算/求最大2的n次方.mjs",
+      "program": "${workspaceFolder}/debug.mjs",
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]
