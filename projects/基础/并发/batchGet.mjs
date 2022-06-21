@@ -18,3 +18,16 @@ function fetch(url, timeout = 3000) {
     setTimeout(() => {resolve(null)}, timeout)
   })])
 }
+
+
+function batchGet2(urls, batchNum = 3, timeout = 3000, index=0) {
+  const restLength = urls.length - index
+  if (restLength <= 0) {
+    return []
+  }
+  if (restLength <= batchNum) {
+    return Promise.all(urls.slice(index).map(url => fetch(url, timeout)))
+  }
+  return Promise.all(urls.slice(index, index + batchNum).map(url => fetch(url, timeout)))
+  .then(res => [...res, ...batchGet2(urls, batchNum, timeout, index+batchNum)]) 
+}

@@ -9,7 +9,7 @@ function perm(arr, ret = [], pre = []){
 
     for (let i = 0; i < length; i++) {
         let left = [...arr]
-            left.splice(i, 1)
+        left.splice(i, 1)
         perm(left, ret, pre.concat(arr[i]))
     }
     return ret
