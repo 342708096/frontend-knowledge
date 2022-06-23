@@ -1,0 +1,51 @@
+<html>
+    <head>
+      <style>
+        .flex {
+          display: flex;
+          width: 100%;
+          border: 1px solid black;
+          height: 500px;
+        }
+        .flex1 {
+          flex-grow: 1;
+          flex-shrink: 1;
+          flex-basis: 500px;
+          background: red;
+          height: 500px;
+        }
+        .flex2 {
+          flex-grow: 2;
+          flex-basis: 500px;
+          flex-shrink: 2;
+          background: green;
+          height: 500px;
+        }
+        /**
+实例解析：
+
+flex-shrink的默认值为1，如果没有显示定义该属性，将会自动按照默认值1在所有因子相加之后计算比率来进行空间收缩。
+
+本例中A、B、C 显式定义了 flex-shrink 为 1，D、E 定义了 flex-shrink 为 2，所以计算出来总共将剩余空间分成了 7 份，其中 A、B、C 占 1 份，D、E 占 2 份，即1:1:1:2:2
+
+我们可以看到父容器定义为 500px，子项被定义为 120px，子项相加之后即为 600 px，超出父容器 100px。那么超出的 100px 需要被 A、B、C、D、E 消化 通过收缩因子，所以加权综合可得 100*1+100*1+100*1+100*2+100*2=700px。
+
+于是我们可以计算 A、B、C、D、E 将被移除的溢出量是多少：
+A 被移除溢出量：(100*1/700)*100，即约等于14px
+B 被移除溢出量：(100*1/700)*100，即约等于14px
+C 被移除溢出量：(100*1/700)*100，即约等于14px
+D 被移除溢出量：(100*2/700)*100，即约等于28px
+E 被移除溢出量：(100*2/700)*100，即约等于28px
+最后A、B、C、D、E的实际宽度分别为：120-14=106px, 120-14=106px, 120-14=106px, 120-28=92px,120-28=92px，此外，这个宽度是包含边框的。
+
+
+        */
+      </style>
+    </head>
+    <body>
+      <div class="flex">
+        <div class="flex1"></div>
+        <div class="flex2"></div>
+      </div>
+    </body>
+</html>

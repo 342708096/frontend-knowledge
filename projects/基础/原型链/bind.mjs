@@ -38,6 +38,7 @@ Function.prototype.bind = function bind(that, ...partArgs) {
   // 获取函数的原型链, 函数作为构造函数时才有显式原型
   const Prototype = F.prototype
   const bindFunction = function (...args){
+    // 作为构造函数
     if (this instanceof bindFunction) {
       return F.call(this, ...partArgs, ...args)
     }

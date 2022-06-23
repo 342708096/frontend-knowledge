@@ -4,30 +4,34 @@
 
 
 
-async function batchGet(urls, batchNum = 3, timeout=3000) {
-  const length = urls.length
-  if (length <= batchNum) {
-    return Promise.all(urls.map((url) => fetch(url, timeout)))
-  }
-  const result = await Promise.all(urls.slice(0, batchNum).map((url) => fetch(url, timeout)))
-  return [...result, ...batchGet(urls.slice(batchNum), batchNum, timeout)]
+async function batchGet(urls, batchNum = 3, timeout=3000 ) {
+  return new Promise((resolve) => {
+    const result = []
+    const executor = (index) => {
+      const chunkUrls = urls.slice(index, index+batchNum)
+      if (chunkUrls.length === 0) {
+        resolve(result)
+      }
+      Promise.all(chunkUrls.map(url => fetch(url, timeout))).then(res => {
+        console.log(...res)
+        result.push(...res)
+        executor(index+batchNum)
+      })
+    }
+    executor(0)
+  })
 }
 
 function fetch(url, timeout = 3000) {
-  return Promise.race([window.fetch(url), new Promise((resolve) => {
-    setTimeout(() => {resolve(null)}, timeout)
-  })])
+  return new Promise(resolve => {
+    setTimeout(() => resolve(url), timeout)
+  })
+  // return Promise.race([window.fetch(url), new Promise((resolve) => {
+  //   setTimeout(() => {resolve(null)}, timeout)
+  // })])
 }
 
-
-function batchGet2(urls, batchNum = 3, timeout = 3000, index=0) {
-  const restLength = urls.length - index
-  if (restLength <= 0) {
-    return []
-  }
-  if (restLength <= batchNum) {
-    return Promise.all(urls.slice(index).map(url => fetch(url, timeout)))
-  }
-  return Promise.all(urls.slice(index, index + batchNum).map(url => fetch(url, timeout)))
-  .then(res => [...res, ...batchGet2(urls, batchNum, timeout, index+batchNum)]) 
-}
+(function () {
+  batchGet([1,2,3,4,5]).then((ret) => console.log(ret))
+  
+})()
