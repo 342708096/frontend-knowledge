@@ -5,8 +5,8 @@
 // 1. 先计算部分匹配表对targetStr
 
 function kmpTargetMap(targetStr) {
-    let prefix = []
-    let suffix = []
+    let prefix = [] // 前缀表
+    let suffix = [] // 后缀表
     let partMatch = []
 
     for (let i = 0, j = targetStr.length; i < j; i++) {
