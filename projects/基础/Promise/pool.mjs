@@ -9,7 +9,7 @@ function requestFactory(size = 3) {
             if (count < size) {
                let fn = pool.shift()
                if (fn) {
-                fn()
+                  fn()
                }
             }
         }, reason => {

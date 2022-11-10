@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <style>
+            @media screen and (orientation:portrait) {
+                /* 竖屏 */
+            }
+
+            @media screen and (orientation:landscape) {
+                /* 横屏 */
+            }
+        </style>
+        <!-- 竖屏 -->
+        <link rel="stylesheet" media="all and (orientation:portrait)" href="..." />
+
+        <!-- 横屏 -->
+        <link rel="stylesheet" media="all and (orientation:landscape)" href="..." />
+    </head>
+    <body>
+        <script>
+            var mql = window.matchMedia("(orientation: portrait)");
+            function onMatchMeidaChange(mql){
+            if(mql.matches) {
+                // 竖屏
+                console.log('竖屏')
+            }else {
+                // 横屏
+                console.log('横屏')
+            }
+            }
+            onMatchMeidaChange(mql);
+            mql.addListener(onMatchMeidaChange);
+
+        </script>
+        <script>
+            var utils = {
+                debounce: function(func,delay){
+                    var timer = null;
+                    return function(){
+                        var context = this,
+                            args = arguments;
+                        clearTimeout(timer);
+                        timer = setTimeout(function(){
+                            func.apply(context,args);
+                        },delay);
+                    }
+                }
+            }
+            function detectOrient(){
+                // 页面高度大于宽度则是竖屏
+                if(window.innerHeight >= window.innerWidth) {
+                    // 竖屏
+                }else {
+                    // 横屏 
+                }
+            }
+            detectOrient();
+            // 在浏览器中，会多次触发resize事件
+            window.addEventListener('resize',utils.debounce(detectOrient, 300));
+
+        </script>
+        <script>
+            /***
+             * window.orientation的取值如下
+                0 代表此时是默认屏幕方向
+                90 代表顺时针偏离默认屏幕方向90度
+                -90 代表逆时针偏离默认屏幕方向90度
+                180 代表偏离默认屏幕方向180度
+             * 
+             */
+            function detectOrient(){
+                if (Math.abs(window.orientation) === 90) {
+                    // 横屏
+                } else {
+                    // 竖屏
+                }
+            }
+            detectOrient();
+            window.addEventListener('orientationchange',detectOrient);
+        </script>
+    </body>
+</html>
