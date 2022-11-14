@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worker Test</title>
+</head>
+<body>
+  <div id="source-arr"></div>
+  <button id="btn">排序</button>
+  <div id="result"></div>
+  <script>
+    let arr = [4, 3, 1, 9]
+    document.getElementById('source-arr').textContent = arr.toString()
+    let worker = new SharedWorker("shared-worker.js")
+    document.getElementById('btn').addEventListener('click', () => {
+      worker.port.postMessage(arr)
+    })
+    worker.port.onmessage = (e) => {
+      document.getElementById('result').textContent = e.data.toString()
+    }
+  </script>
+</body>
+</html>

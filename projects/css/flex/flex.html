@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 1000px;
+            height: 1000px;
+            border: 1px solid red;
+            /* 多行时内容居中 */
+            /* align-content: center;  */
+            /* 在单条轴线的对齐方式 */
+            /* align-items: center; */
+
+        }
+        .item {
+            width: 300px;  /* 内容溢出时则为300px */
+            flex-basis: 200px;  /* 未溢出时宽度为200px */
+            height: 200px;
+            text-align: center;
+            border: 1px solid blue;
+            /* overflow: hidden; */
+        }
+        .item1 {
+            width: 100px;
+            height: 100px;
+            align-self: flex-end;
+        }
+        .item2 {
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item">1</div>
+        <div class="item"><div class="item2"></div></div>
+        <div class="item">2</div>
+        <div class="item item1">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">;odifujgsiodfjg[ossdfsdfsdfdfsdlksdjmfkljlfkdffs</div>
+        
+    </div>
+</body>
+</html>
