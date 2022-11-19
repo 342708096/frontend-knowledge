@@ -11,7 +11,7 @@ class Promise {
             if (this.state === 'pending') {
                 this.state = 'fulfilled'
                 this.value = value
-                this.onResolvedCallbacks.forEach(fn => fn()) 
+                this.onResolvedCallbacks.forEach(fn => fn())
             }
         }
         let reject = reason => {
@@ -42,13 +42,13 @@ class Promise {
                     } catch (e) {
                         reject(e)
                     }
-                    
+
                 })
             }
             const rejectRejected = () => {
                 setTimeout(() => {
                     try {
-                        const rejectedPromise = onRejected(this.reason) 
+                        const rejectedPromise = onRejected(this.reason)
                         resolvePromise(nextPromise, rejectedPromise, resolve, reject)
                     } catch (e) {
                         reject(e)
@@ -71,7 +71,7 @@ class Promise {
     catch(onRejected){
         return this.then(undefined, onRejected)
     }
-    /** 
+    /**
      * 不会接收任何参数, settled的结果和上一次相同
      * 备注： 在finally回调中 throw（或返回被拒绝的promise）将以 throw() 指定的原因拒绝新的promise.
     */
@@ -116,8 +116,8 @@ class Promise {
     }
     /**
      * 谁先settled就返回谁的结果
-     * @param {*} promises 
-     * @returns 
+     * @param {*} promises
+     * @returns
      */
     static race(promises) {
         return new Promise((resolve, reject) => {
@@ -131,8 +131,8 @@ class Promise {
      * 一旦有任何一个iterable里面的promise对象失败则立即触发该promise对象的失败。这个新的promise对象在触发成功状态以后，
      * 会把一个包含iterable里所有promise返回值的数组作为成功回调的返回值，顺序跟iterable的顺序保持一致；如果这个新的promise
      * 对象触发了失败状态，它会把iterable里第一个触发失败的promise对象的错误信息作为它的失败错误信息。
-     * @param {*} promises 
-     * @returns 
+     * @param {*} promises
+     * @returns
      */
     static all(promises) {
         const result = []
@@ -151,7 +151,7 @@ class Promise {
     }
     /**
      * 举凡有一个成功就返回该成功的结果, 否则返回全部失败的Error
-     * @param {*} promises 
+     * @param {*} promises
      */
     static any(promises) {
         const result = []
@@ -181,7 +181,7 @@ class Promise {
                         if (++count === promises.length) {
                             resolve(result)
                         }
-                    }, 
+                    },
                     (reason) => {
                         result[i] = reason
                         if (++count === promises.length) {

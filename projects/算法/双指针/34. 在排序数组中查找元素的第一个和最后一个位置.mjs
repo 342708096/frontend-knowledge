@@ -1,0 +1,71 @@
+/**
+ * 给你一个按照非递减顺序排列的整数数组 nums，和一个目标值 target。请你找出给定目标值在数组中的开始位置和结束位置。
+
+如果数组中不存在目标值 target，返回 [-1, -1]。
+
+你必须设计并实现时间复杂度为 O(log n) 的算法解决此问题。
+
+ 
+
+示例 1：
+
+输入：nums = [5,7,7,8,8,10], target = 8
+输出：[3,4]
+示例 2：
+
+输入：nums = [5,7,7,8,8,10], target = 6
+输出：[-1,-1]
+示例 3：
+
+输入：nums = [], target = 0
+输出：[-1,-1]
+ 
+
+提示：
+
+0 <= nums.length <= 105
+-109 <= nums[i] <= 109
+nums 是一个非递减数组
+-109 <= target <= 109
+
+来源：力扣（LeetCode）
+链接：https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ */
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+ var searchRange = function(nums, target) {
+  const result = [-1, -1]
+  binarySearch(nums, 0, nums.length-1, target, result)
+  return result
+};
+
+function binarySearch(nums, left, right, target, result=[-1, -1]) {
+  if (left > right) {
+    return
+  }
+  const middle = left + ((right - left) >> 1)
+  if (nums[middle] === target) {
+    if (result[0] === -1 || middle < result[0]) {
+      result[0] = middle
+    }
+    if (result[1] === -1 || middle > result[1]) {
+      result[1] = middle
+    }
+    binarySearch(nums, left, middle-1, target, result)
+    binarySearch(nums, middle+1, right, target, result)
+    return
+  }
+  if (nums[middle] < target) {
+    binarySearch(nums, middle+1, right, target, result)
+    return
+  }
+  binarySearch(nums, left, middle-1, target, result)
+}
+
+console.log(searchRange([5,7,7,8,8,10],
+  8))
